@@ -1096,11 +1096,6 @@ function loadScoresFromDB(genre) {
 }
 
 function showRankings(genre) {
-  STATE.rankingsTab = genre;
-  $$('.rtab').forEach(t => {
-    t.classList.toggle('active', t.dataset.rtab === genre);
-  });
-
   const scores = getScores(genre);
   const list = $('#rankings-list');
   const medals = ['🥇', '🥈', '🥉'];
@@ -1117,6 +1112,12 @@ function showRankings(genre) {
       <span class="ranking-score">${s.score}</span>
     </div>
   `).join('');
+
+  gsap.fromTo('.ranking-item',
+    { x: -20, opacity: 0 },
+    { x: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: 'power2.out' }
+  );
+}
 
   gsap.fromTo('.ranking-item',
     { x: -20, opacity: 0 },
@@ -1160,7 +1161,15 @@ function initRankingsScreen() {
     tab.addEventListener('click', () => {
       HAPTICS.tap();
       const genre = tab.dataset.rtab;
-      loadScoresFromDB(genre);  // Load from database
+      
+      // Update button state immediately
+      STATE.rankingsTab = genre;
+      $$('.rtab').forEach(t => {
+        t.classList.toggle('active', t.dataset.rtab === genre);
+      });
+      
+      // Load scores from database and display
+      loadScoresFromDB(genre);
       applyGenreTheme(genre);
     });
   });
