@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -89,8 +90,8 @@ DATABASES = {
     }
 }
 
-# Disable database during collectstatic
-if os.environ.get('VERCEL'):
+# Only disable database during collectstatic, not during migrations or runtime
+if os.environ.get('VERCEL') and len(sys.argv) > 1 and sys.argv[1] == 'collectstatic':
     DATABASES = {}
 
 
