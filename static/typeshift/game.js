@@ -747,7 +747,7 @@ function initLanding() {
   // Rankings button
   $('#btn-scores').addEventListener('click', () => {
     HAPTICS.tap();
-    showRankings(STATE.rankingsTab);
+    loadScoresFromDB(STATE.rankingsTab);  // Load from database
     showScreen('screen-rankings');
   });
 
@@ -1051,7 +1051,7 @@ function endGame() {
 }
 
 /* ─────────────────────────────────────
-   LEADERBOARD (localStorage)
+   LEADERBOARD (Database + localStorage fallback)
    ───────────────────────────────────── */
 function getScores(genre) {
   try {
@@ -1060,12 +1060,39 @@ function getScores(genre) {
 }
 
 function saveScore(genre, name, score, difficulty) {
+  // Save to database via API
+  fetch('/api/scores/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: name.toUpperCase().trim() || 'BAYANI',
+      score,
+      genre,
+      difficulty
+    })
+  }).catch(err => console.error('Failed to save score:', err));
+  
+  // Also save to localStorage as fallback
   const scores = getScores(genre);
   scores.push({ name: name.toUpperCase().trim() || 'BAYANI', score, difficulty, date: Date.now() });
   scores.sort((a, b) => b.score - a.score);
   const top = scores.slice(0, 15);
   localStorage.setItem(`typeshift_scores_${genre}`, JSON.stringify(top));
   return top;
+}
+
+function loadScoresFromDB(genre) {
+  fetch(`/api/scores/?genre=${genre}&limit=15`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.scores && data.scores.length > 0) {
+        localStorage.setItem(`typeshift_scores_${genre}`, JSON.stringify(data.scores));
+        showRankings(genre);
+      }
+    })
+    .catch(err => console.error('Failed to load scores:', err));
 }
 
 function showRankings(genre) {
@@ -1120,7 +1147,7 @@ function initResultScreen() {
   });
   $('#btn-view-scores').addEventListener('click', () => {
     HAPTICS.tap();
-    showRankings(STATE.genre);
+    loadScoresFromDB(STATE.genre);  // Load from database
     showScreen('screen-rankings');
   });
 }
@@ -1132,8 +1159,9 @@ function initRankingsScreen() {
   $$('.rtab').forEach(tab => {
     tab.addEventListener('click', () => {
       HAPTICS.tap();
-      showRankings(tab.dataset.rtab);
-      applyGenreTheme(tab.dataset.rtab);
+      const genre = tab.dataset.rtab;
+      loadScoresFromDB(genre);  // Load from database
+      applyGenreTheme(genre);
     });
   });
 
