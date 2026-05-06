@@ -1089,10 +1089,19 @@ function loadScoresFromDB(genre) {
     .then(data => {
       if (data.scores && data.scores.length > 0) {
         localStorage.setItem(`typeshift_scores_${genre}`, JSON.stringify(data.scores));
-        showRankings(genre);
+      } else {
+        // Clear old scores if API returns nothing for this genre
+        localStorage.removeItem(`typeshift_scores_${genre}`);
       }
+      // Always display rankings for the selected genre
+      showRankings(genre);
     })
-    .catch(err => console.error('Failed to load scores:', err));
+    .catch(err => {
+      console.error('Failed to load scores:', err);
+      // Clear old scores on error and show empty state
+      localStorage.removeItem(`typeshift_scores_${genre}`);
+      showRankings(genre);
+    });
 }
 
 function showRankings(genre) {
