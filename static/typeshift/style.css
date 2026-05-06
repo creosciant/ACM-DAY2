@@ -617,7 +617,8 @@ body {
 
 /* ── Choices ── */
 .choices-grid {
-  position: fixed;
+  position: flex;
+  justify-content: center;
   bottom: 16px;
   left: 0; right: 0;
   padding: 0 16px;
