@@ -34,7 +34,7 @@ def api_scores(request):
     genre = request.GET.get('genre', 'ph')
     limit = int(request.GET.get('limit', 15))
     
-    scores = Score.objects.filter(genre=genre)[:limit]
+    scores = Score.objects.filter(genre=genre).order_by('-score', '-created_at')[:limit]
     scores_data = [
         {
             'name': s.player_name,
