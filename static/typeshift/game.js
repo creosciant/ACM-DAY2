@@ -1119,12 +1119,6 @@ function showRankings(genre) {
   );
 }
 
-  gsap.fromTo('.ranking-item',
-    { x: -20, opacity: 0 },
-    { x: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: 'power2.out' }
-  );
-}
-
 /* ─────────────────────────────────────
    RESULT SCREEN EVENTS
    ───────────────────────────────────── */
