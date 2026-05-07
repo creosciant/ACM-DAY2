@@ -1,53 +1,32 @@
 # ACM-DAY2
 
-Type Shift: Hackathon
+## TypeShift: Hackathon Trivia
 
-A tiny browser game or interactive visualization that's enjoyable for 60 seconds.
+This is a simple browser trivia game built with Django, HTML, CSS, JavaScript, and GSAP. It’s meant to be a quick 60-second challenge where players pick a category and difficulty, answer questions, and save their score.
 
-A Toy is a small, self-contained interactive experience in the browser. It doesn't need to be a complex game — it just needs to be fun, satisfying, or visually interesting for about a minute. 
+## About the Game
+TypeShift has three themed worlds:
+- **Pilipinas** — Philippine culture, history, society, and current events.
+- **Akademya** — science, math, logic, IT, and academic thinking.
+- **Trendzone** — entertainment, pop culture, social media, and gaming.
 
-Examples: a rhythm-tapping game, a generative art canvas where your mouse controls the output, a typing speed test with a twist, a mini puzzle game, or a physics sandbox. The goal is delight — something that makes someone say "oh, that's cool" and share the link.
+Choose a genre, pick a difficulty, then race through questions before the timer runs out. When the round ends, you can save your name and score and check the leaderboard.
 
-This pathway focuses on state management (tracking what's happening in your app at any moment), animation (making things move smoothly), and interaction design (making things feel good to use). These are transferable skills that apply far beyond games. You'll learn: State management, animation, and interaction design.
+## What You Get
+- Three trivia categories with different themes
+- Easy, Medium, and Hard difficulty settings
+- A 60-second gameplay loop
+- Score and streak tracking
+- Leaderboard pages for each category
+- Mobile-friendly layout
+- Retro pixel-style UI with animations
 
+## Tech Used
+- Python 3
+- Django 6
+- HTML5, CSS, JavaScript
+- GSAP for frontend animation
+- Whitenoise for static file delivery
+- `psycopg2-binary` for PostgreSQL support if needed
+- Neon for database and local development
 
-Paexplain here plan:
-
-Trivia game
-
-3 genres:
-Philippines Knowledge and Society: history, events and politics, pop culture, traditon, languages, etc
-Academic & Logical Thinking: general science (physics, bio, chem), math, IT and basic prog concepts, logic puzzles
-Entertainment & Global trends: Movies & series, music, social media trends, gaming/sports
-
-3 difficulties (easy, medium hard) (??)
-
-
-
-
-
-
-Tech Stack
-
-Front-end:
-HTML5
-SASS
-GSAP
-
-Back-end 
-Python: Logic 
-Django: Database
-
-
-
-Design Approach
-Pixelated
-Gamification
-Sfx 
-
-Features:
-Personal Score
-Ranking with other users
-Can be played alone. 
-Can be play using phone and web.
-a
